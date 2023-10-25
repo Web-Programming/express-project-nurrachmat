@@ -25,9 +25,9 @@ services:
     networks:
       - express-mongo
     expose:
-      - 27017
+      - 27018
     ports:
-      - 27017:27017
+      - 27018:27017
       
 networks:
   #angular-express:
