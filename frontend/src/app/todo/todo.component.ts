@@ -28,16 +28,15 @@ export class TodoComponent {
   addTodo(){
     this.dataService.saveTodo(this.textTodo).subscribe(
       (response) => { 
-        this.dataService.getListTodo().subscribe(
-    (response) => { this.todos = response; },
-    (error) => { console.log(error); });
+        this.refreshData();
        },
       (error) => { console.log(error); });
+  }
 
-      
-      //const td = new Todo();
-      //td.text = this.textTodo;
-      //this.dataService.simpanTodo(td);
+  refreshData(){
+    this.dataService.getListTodo().subscribe(
+    (response) => { this.todos = response; },
+    (error) => { console.log(error); });
   }
   
 }
