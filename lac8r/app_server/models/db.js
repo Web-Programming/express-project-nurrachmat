@@ -1,7 +1,7 @@
 let mongoose = require("mongoose");
 //let dbURI = "mongodb://localhost/todo";
-//let dbURI = "mongodb://127.0.0.1:27017/todo"
-let dbURI = "mongodb://mongo:27017/todo"
+let dbURI = "mongodb://127.0.0.1:27017/todo"
+//let dbURI = "mongodb://mongo:27017/todo"
 
 mongoose.connect(dbURI, {
     useNewUrlParser: true

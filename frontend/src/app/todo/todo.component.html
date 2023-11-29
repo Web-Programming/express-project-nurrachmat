@@ -1,0 +1,29 @@
+<section class="bg-gray-50">
+  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto">
+    <h1 class="font-medium text-lg">My Todo</h1>
+    <div class="mb-4">
+      <div class="flex mt-4">
+        <input
+          id="textTodo"
+          name="textTodo"
+          class="shadow appearance-none border rounded w-[320px] py-2 px-3 mr-4 text-grey-darker"
+          placeholder="Add Todo"
+          [(ngModel)]="textTodo">
+        <button
+          (click)="addTodo()"
+          class="flex-no-shrink p-2 w-[90px] border-2 rounded-lg text-white border-teal hover:text-white hover:bg-teal bg-blue-500"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+    <div class="w-[500px]">
+      <ul class="bg-white rounded-lg shadow divide-y divide-gray-200 max-w-sm">
+          <li class="px-6 py-4" *ngFor="let item of todos?.data">
+            <p class="text-gray-700">{{item.text}}</p>
+            <button class="p-1  border-2 rounded-md text-white border-teal hover:text-white hover:bg-teal bg-red-500">Delete</button>
+          </li>
+      </ul>
+    </div>
+  </div>
+</section>

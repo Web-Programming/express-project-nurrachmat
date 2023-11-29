@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -25,6 +26,10 @@ app.use('/public', express.static(__dirname + '/images/'));
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
 var todoRouter = require("./app_server/routes/todo");
+
+//Allow CORS
+app.use(cors());
+
 //Use Routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
