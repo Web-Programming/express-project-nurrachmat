@@ -18,3 +18,4 @@ mongoose.connection.on("disconnected", () => {
 
 //memanggil model
 require("./todo");
+require("./user");
