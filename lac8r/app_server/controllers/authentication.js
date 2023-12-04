@@ -14,23 +14,24 @@ const register = (req, res) => {
     user.name = req.body.name;
     user.email = req.body.email;
     user.setPassword(req.body.password);
-    user.save((err) => {
-        if (err) {
-            res
-                .status(404)
-                .json(err);
-        } else {
-            const token = user.generateJwt();
+    
+    user.save()
+        .then((result) => {
+           const token = user.generateJwt();
             res
                 .status(200)
                 .json({
                     token
                 });
-        }
-    });
+        })
+        .catch((err) => {
+            res
+                .status(400)
+                .json(err);
+        });
 };
 
-const login = (req, res) => {
+const login = (req, res, next) => {
     if (!req.body.email || !req.body.password) {
         return res
             .status(400)
@@ -38,7 +39,7 @@ const login = (req, res) => {
                 "message": "All fields required"
             });
     }
-    passport.authenticate('local', (err, user, info) => {
+    passport.authenticate('basic', (err, user, info) => {
         let token;
         if (err) {
             return res
@@ -57,7 +58,7 @@ const login = (req, res) => {
                 .status(401)
                 .json(info);
         }
-    })(req, res);
+    })(req, res, next);
 };
 module.exports = {
     register,
