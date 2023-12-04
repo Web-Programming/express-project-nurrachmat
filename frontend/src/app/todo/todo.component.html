@@ -21,7 +21,11 @@
       <ul class="bg-white rounded-lg shadow divide-y divide-gray-200 max-w-sm">
           <li class="px-6 py-4" *ngFor="let item of todos?.data">
             <p class="text-gray-700">{{item.text}}</p>
-            <button class="p-1  border-2 rounded-md text-white border-teal hover:text-white hover:bg-teal bg-red-500">Delete</button>
+            <button 
+              class="p-1 border-2 rounded-md text-white border-teal hover:text-white hover:bg-teal bg-red-500"
+              (click)="deleteTodo(item._id)"
+              >
+              Delete</button>
           </li>
       </ul>
     </div>

@@ -17,22 +17,17 @@ export class DataService {
     const url: string = `${this.apiBaseUrl}/todo`;
     return this.http.get(url);
   }
-
+  
+  //method untuk menginsert data todo
   public saveTodo(text: string) {
     const url: string = `${this.apiBaseUrl}/todo/insert`;
     return this.http.post(url, {text: text});
   }
-
-   public simpanTodo(user: Todo): Promise<any> {
-    const url: string = `${this.apiBaseUrl}/todo/insert`;
-    return this.http
-    .post(url, user)
-    .toPromise()
-    .then(response => response as any)
-    .catch(this.handleError);
+  //method untuk menghapus data todo
+  public deleteTodo(id: String) {
+    const url: string = `${this.apiBaseUrl}/todo/delete/${id}`;
+    return this.http.delete(url);
   }
-
-
 
   private handleError(error: any): Promise<any> {
     console.error('Something has gone wrong', error);

@@ -20,23 +20,29 @@ export class TodoComponent {
   constructor(private dataService: DataService) { }
   textTodo = "";
   ngOnInit() {
-    this.dataService.getListTodo().subscribe(
-    (response) => { this.todos = response; },
-    (error) => { console.log(error); });
+    this.refreshData();
   }
 
+  //insert data
   addTodo(){
-    this.dataService.saveTodo(this.textTodo).subscribe(
-      (response) => { 
+    this.dataService.saveTodo(this.textTodo)
+    .subscribe((response) => { 
+        console.log(response);
         this.refreshData();
-       },
-      (error) => { console.log(error); });
+       });
+  }
+
+  //delete data
+  deleteTodo(id: String){
+    this.dataService.deleteTodo(id)
+    .subscribe((response) => { 
+        this.refreshData();
+      });
   }
 
   refreshData(){
-    this.dataService.getListTodo().subscribe(
-    (response) => { this.todos = response; },
-    (error) => { console.log(error); });
+    this.dataService.getListTodo()
+    .subscribe((response) => { this.todos = response; });
   }
   
 }
