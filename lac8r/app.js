@@ -39,6 +39,24 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter); //route ke model users
 app.use("/todo", todoRouter);
 
+app.use('/todo', (req, res, next) => {
+ res.header('Access-Control-Allow-Origin', '*');
+ res.header('Access-Control-Allow-Headers', 
+ 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+ next();
+});
+
+//Catching Error
+app.use((err, req, res, next) => {
+  if (err.name === 'UnauthorizedError') {
+    res
+      .status(401)
+      .json({
+        "message": err.name + ": " + err.message
+      });
+  }
+});
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
