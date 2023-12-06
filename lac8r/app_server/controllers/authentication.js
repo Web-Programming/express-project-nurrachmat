@@ -39,15 +39,14 @@ const login = (req, res, next) => {
                 "message": "All fields required"
             });
     }
-    passport.authenticate('basic', (err, user, info) => {
-        let token;
+    passport.authenticate('local', (err, user, info) => {
         if (err) {
             return res
                 .status(404)
                 .json(err);
         }
         if (user) {
-            token = user.generateJwt();
+            const token = user.generateJwt();
             res
                 .status(200)
                 .json({

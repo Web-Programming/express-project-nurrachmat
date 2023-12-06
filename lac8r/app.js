@@ -5,8 +5,11 @@ var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+//konfigurasi passport
+const passport = require('passport');
 //load mongodb db connection
 require('./app_server/models/db');
+require("./app_server/configs/passport"); //load file config
 var app = express();
 
 // view engine setup
@@ -20,8 +23,8 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
-app.use('/public', express.static(__dirname + '/images/'));
+app.use(passport.initialize());
+
 
 //Set Routes
 var indexRouter = require('./app_server/routes/index');
