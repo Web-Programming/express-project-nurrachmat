@@ -1,0 +1,48 @@
+services:
+  frontend:
+      build:
+        context: frontend
+        target: dev-envs
+      ports:
+        - 4200:4200
+      stdin_open: true
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+      restart: always
+      networks:
+        - angular-express
+      depends_on:
+        - backend
+        
+  backend:
+    restart: always
+    build:
+      context: lac8r
+      target: dev-envs
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - mongo
+    networks:
+      - express-mongo
+      - angular-express
+    expose: 
+      - 3000
+    ports:
+      - 3002:3000
+
+  mongo:
+    restart: always
+    image: mongo:6.0
+    volumes:
+      - ./data:/data/db
+    networks:
+      - express-mongo
+    expose:
+      - 27018
+    ports:
+      - 27018:27017
+      
+networks:
+  angular-express:
+  express-mongo:

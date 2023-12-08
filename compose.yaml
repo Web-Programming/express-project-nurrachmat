@@ -28,10 +28,8 @@ services:
     networks:
       - express-mongo
       - angular-express
-    expose: 
-      - 3000
     ports:
-      - 3002:3000
+      - 3000:3000
 
   mongo:
     restart: always
@@ -40,8 +38,6 @@ services:
       - ./data:/data/db
     networks:
       - express-mongo
-    expose:
-      - 27018
     ports:
       - 27018:27017
       
