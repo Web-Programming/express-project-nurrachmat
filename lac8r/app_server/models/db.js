@@ -1,7 +1,7 @@
 let mongoose = require("mongoose");
-//let dbURI = "mongodb://localhost/todo";
-//let dbURI = "mongodb://127.0.0.1:27017/todo"
-let dbURI = "mongodb://mongo:27017/todo"
+let dbURI = "mongodb+srv://paw2:paw2mdp@paw2.iendmj6.mongodb.net/todo?retryWrites=true&w=majority";   //jika menggunakan mongdb online 
+//let dbURI = "mongodb://127.0.0.1:27017/todo"  //jika menggunakan mongo db local
+//let dbURI = "mongodb://mongo:27017/todo" //jika menggunakan docker
 
 mongoose.connect(dbURI, {
     useNewUrlParser: true
