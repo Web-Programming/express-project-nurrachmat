@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from '../authentication.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -8,33 +8,37 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  public formError: string = '';
-  public credentials = {
-    name: '',
-    email: '',
-    password: ''
-  };
   
-  constructor(private router: Router, private authenticationService: AuthenticationService
-  ) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService){}
 
-  public onRegisterSubmit(): void {
-      this.formError = '';
-      if (
-        !this.credentials.name ||
-        !this.credentials.email ||
-        !this.credentials.password
-      ) {
-        this.formError = 'All fields are required, please try again';
-      } else {
-        this.doRegister();
-      }
+  public credentials = {
+    name: "",
+    email: "",
+    password: ""
   }
-    private doRegister(): void {
-      
-      this.authenticationService.register(this.credentials)
-        .then(() => this.router.navigateByUrl('/todo'))
-        .catch((message) => this.formError = message);
-    }
 
+  public formError: string = ''
+
+  public onRegisterSubmit(): void{
+    this.formError = '';
+    if(!this.credentials.name || !this.credentials.email || !this.credentials.password){
+      this.formError = 'All fields are required, please try again';
+    }else{
+      this.doRegister();
+    }
+  }
+
+  public doRegister(): void {
+      this.authenticationService.register(this.credentials)
+        .then(() => {
+          this.router.navigateByUrl('/todo');
+        })
+        .catch((error) => {
+          if(error.error?.code == 11000){
+            this.formError = "Email already registered";
+          }else{
+            this.formError = error?.message;
+          }
+        })
+  }
 }

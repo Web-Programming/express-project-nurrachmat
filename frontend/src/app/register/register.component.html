@@ -23,7 +23,7 @@
           Create and account
         </h1>
         <form class="space-y-4 md:space-y-6" (submit)="onRegisterSubmit()">
-          <div role="alert" *ngIf="formError" class="alert alert-danger">{{ formError }}</div>
+          <div class="alert alert-danger" *ngIf="formError">{{formError}}</div>
           <div>
             <label
               for="name"
@@ -35,8 +35,9 @@
               name="name"
               id="name"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Your Name" [(ngModel)]="credentials.name"
+              placeholder="Your Name" 
               required
+              [(ngModel)]="credentials.name"
             />
           </div>
           <div>
