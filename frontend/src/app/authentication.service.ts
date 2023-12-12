@@ -37,4 +37,30 @@ export class AuthenticationService {
         })
     })
   }
+
+  //untuk kebutuhan login
+  public isLoggedIn(): boolean {
+    const token: string =  this.getToken();
+    if(token){
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.exp > (Date.now() / 1000);
+    }else{
+      return false;
+    }
+  }
+
+  //untuk kebutuhan logout
+  public logout(): void{
+    this.storage.removeItem("app-token");
+  }
+
+  //untuk mengabil info user
+  public getCurrentUser(): User | null {
+    if(this.isLoggedIn()){
+      const token: string = this.getToken();
+      const { email, name } = JSON.parse(atob(token.split('.')[1]));
+      return { email, name } as User;
+    }
+    return null;
+  }
 }
