@@ -15,6 +15,7 @@ router.route('/insert')
     .post(auth, todoController.insert);  //insert todos
 router.put('/update/:id', todoController.update);  //mengupdate todos
 router.get('/show/:id', todoController.show);  //show detail todos by id
-router.delete('/delete/:id', todoController.destroy) //delete todos by id
+router.route('/delete/:id')
+    .delete(auth, todoController.destroy) //delete todos by id
   
 module.exports = router;

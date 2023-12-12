@@ -1,15 +1,19 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './user';
 import { Observable, catchError } from 'rxjs';
 import { Authresponse } from './authresponse';
+import { BROWSER_STORAGE } from './storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   //inject class httpclient
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(BROWSER_STORAGE) private storage: Storage
+    ) { }
 
   //mengatur base url api yg dipakai
   private apiBaseUrl = 'http://localhost:3000';
@@ -23,12 +27,18 @@ export class DataService {
   //method untuk menginsert data todo
   public saveTodo(text: string) {
     const url: string = `${this.apiBaseUrl}/todo/insert`;
-    return this.http.post(url, {text: text});
+    const httpOption = {
+      headers: new HttpHeaders({'Authorization': `Bearer ${this.storage.getItem('app-token')}`})
+    }
+    return this.http.post(url, {text: text}, httpOption);
   }
   //method untuk menghapus data todo
   public deleteTodo(id: String) {
     const url: string = `${this.apiBaseUrl}/todo/delete/${id}`;
-    return this.http.delete(url);
+    const httpOption = {
+      headers: new HttpHeaders({'Authorization': `Bearer ${this.storage.getItem('app-token')}`})
+    }
+    return this.http.delete(url, httpOption);
   }
 
   public register(user: User): Observable<Authresponse> {
