@@ -39,6 +39,24 @@ export class AuthenticationService {
   }
 
   //untuk kebutuhan login
+  public login(user: User): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.dataService.login(user)
+        .subscribe({
+          next: (response) => {
+            resolve(this.saveToken(response.token))
+          },
+          error: (e) => {
+            reject(e);
+          },
+          complete: () => {
+            console.log("login completed");
+          }
+        })
+    })
+  }
+
+  //untuk kebutuhan login
   public isLoggedIn(): boolean {
     const token: string =  this.getToken();
     if(token){

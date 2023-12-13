@@ -18,6 +18,7 @@ export class AppComponent {
 
   public doLogout(): void {
     this.authenticationService.logout();
+    this.router.navigateByUrl('/login');
   }
 
   public getUsername(): string {

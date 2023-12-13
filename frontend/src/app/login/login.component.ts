@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -7,19 +9,33 @@ import { FormControl, FormGroup } from "@angular/forms";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  //template driven
-  email = "rachmat.nur91@gmail.com";
-  password = "";
 
-  model = {email: "mamata@gmail.com", password:""}
+  constructor(private router: Router, private authenticationService: AuthenticationService){}
+  
+  public credentials = {
+    name: "",
+    email: "",
+    password: ""
+  }
 
-  //Reactive form
-  myemail = new FormControl('')
-  mypass = new FormControl('')
+  public formError: string = ''
 
-  //Grouping Form
-  formLogin = new FormGroup({
-    email: new FormControl(''),
-    pass: new FormControl('')
-  })
+  public onLoginSubmit(): void{
+    this.formError = '';
+    if(!this.credentials.email || !this.credentials.password){
+      this.formError = 'All fields are required, please try again';
+    }else{
+      this.doLogin();
+    }
+  }
+
+  public doLogin(): void {
+      this.authenticationService.login(this.credentials)
+        .then(() => {
+          this.router.navigateByUrl('/todo');
+        })
+        .catch((error) => {
+            this.formError = error?.error?.message;
+        })
+  }
 }
